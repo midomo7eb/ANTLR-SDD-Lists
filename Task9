@@ -1,0 +1,17 @@
+//Task 9
+
+grammar Task9;
+
+start : s EOF {System.out.println($s.val.replace(",)",")"));};
+s returns [String val]
+	:'(' f '.' r ')'{$val = "("+$f.val + "," + $r.val;}
+	|'(' f ')'{$val = "(" + $f.val + ")";}
+	|'nil'{$val = "()";};
+f returns [String val]
+	:NUM{$val = $NUM.text;};
+r returns [String val]
+	:'(' f '.' r ')'{$val = $f.val + "," + $r.val;}
+	|'(' f '.' 'nil' ')'{$val = $f.val;}
+	|'nil'{$val = ")";};
+NUM : ('0'..'9') +;
+WS : [ \r\n\t] + -> skip;
